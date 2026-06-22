@@ -17,7 +17,7 @@ console.log(name) // BOth will gonna give OUtput as Amaan as they are in global 
 // Funtion Scope
 function give (){
     let age = 18;  // Function Scope
-    console.log(age);  
+    console.log(age);   
 }
 
 // Hoisting
