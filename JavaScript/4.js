@@ -145,24 +145,24 @@ const candidate = candidates.find(  // Finds Candidate with ID - 2
 
 console.log(candidate);
 
-// every() → do ALL elements match?
-// OUtputs true or false
-const marks = [60,70,80];
-const results = marks.every(
-    mark => mark >= 50
-);
-console.log(results);  // true
+// // every() → do ALL elements match?
+// // OUtputs true or false
+// const marks = [60,70,80];
+// const results = marks.every(
+//     mark => mark >= 50
+// );
+// console.log(results);  // true
 
-// some() → do SOME elements match?
-// True or False
-["Ali","Ahmed"].some(  // False
-    name => name.length > 5
-)  
+// // some() → do SOME elements match?
+// // True or False
+// ["Ali","Ahmed"].some(  // False
+//     name => name.length > 5
+// )  
 
-// Example
-["Ali","Ahmed"].some(
-    name => name.length > 5
-) // false
+// // Example
+// ["Ali","Ahmed"].some(
+//     name => name.length > 5
+// ) // false
 
 
 /*
@@ -181,3 +181,75 @@ Since no counterexample exists, JavaScript returns true.
 
 */
 
+
+// reduce() --> Takes manu values and return one value
+
+// Sum of Numbers
+const numss = [1,2,3,4];
+
+const total = numss.reduce(
+    (sum, num) => sum + num,
+    0
+);
+
+console.log(total);  // Output would be 10
+
+// Anatomy of Reduce
+/*
+
+array.reduce(
+    (accumulator, currentValue) => {
+        // logic
+    },
+    initialValue
+);
+
+*/
+
+// Product Example
+/*
+
+const nums = [2,3,4];
+
+const result = nums.reduce(
+    (product, num) => product * num,
+    1
+);
+
+console.log(result);
+
+*/
+
+
+// sort() - By Default sort in JS works by sorting alphabetically - Suited for string data
+console.log(fruits)
+fruits.sort();
+console.log(fruits)
+
+
+// So to sort in ascending or descending, we have to ompare function.
+const array = [1, 10, 2, 5];
+
+array.sort((a, b) => a - b); // For Ascending Order -> for Descending it would be b - a
+
+console.log(array);
+
+// Spread Operator (...)  -> it removes square brackets in output
+const row = [1,2,3];
+console.log(...row);
+
+
+// Copying Arrays
+const newFruits = fruits;
+const newestFruit = [...fruits]
+
+// Merging Arrays
+const frontend = ["HTML","CSS"];
+const backend = ["Node","MongoDB"];
+
+const skillas = [
+    ...frontend,
+    ...backend
+];
+
+console.log(skillss);  // Outout -> ["HTML","CSS","Node","MongoDB"]
