@@ -45,8 +45,8 @@ const studentManagementSystem = {
     console.table(this.students);  // console.table will print the array in proper table
   },
 
-  findStudentById(Id){ 
-    console.log(this.students.find(student => student.id === Id))
+  findStudentById(id){ 
+    return this.students.find(student => student.id === id)
   },
 
   passedStudents(){
@@ -54,52 +54,76 @@ const studentManagementSystem = {
   },
 
   studentNames(){
-    const names = this.students.map(student => student.name)
-    console.log(names)
+    return this.students.map(student => student.name)
   },
 
   averageMarks(){
-    const marks = this.students.map(student => student.marks);
-    return marks.reduce((sum , mark) => sum + mark , 0) / marks.length;
+    const total = this.students.reduce((sum,student) => sum + student.marks , 0);
+    return total / this.students.length;
   },
 
-  addStudent(id, name, age, marks, department){
-    this.students.push({id,name,age,marks,department})
-    console.log(this.students)
+  addStudent(student){
+    if(!this.validateStudent(student)) return "Student Info isn't valid!"
+    const lastStudent = this.students[this.students.length - 1]  // Remember we can't work on indexes as it can create problem while deleting
+    const newStudent = {
+      ...student, id : lastStudent ? lastStudent.id + 1 : 1 // Spread Operator copies all properties from student
+    }
+    this.students.push(newStudent)
+  },
+
+  validateStudent(student){
+    if(!this.validateMarks(student.marks)) return false
+    else if(student.age<1 || !Number.isInteger(student.age)) return false
+    
+    const required = ["name", "age", "marks", "department"];
+    for(const field of required){
+      if(!(field in student)) return false
+    }
+    return true
   },
 
   deleteStudent(id){
+    const student = this.findStudentById(id)
+    if(!student) return "Student doesn't Exists!"
     this.students = this.students.filter(student => student.id !== id)
-    console.log(this.students);
   },
 
   updateMarks(id, marks){
-    this.students.find(student => student.id === id).marks = marks;
-    console.log(this.students)
+    const student = this.findStudentById(id)
+    if(!student) return "Student Not Found!"
+    if(!this.validateMarks(marks)) return "Please! Enter a valid marks!"
+    student.marks = marks;
+  },
+
+  validateMarks(marks){
+    if(marks<0) return false
+    else if(marks>100) return false
+    else if(!Number.isInteger(marks)) return false
+    return true;
   },
 
   topper(){
-    const marks = this.students.map(student => student.marks);
-    const max = marks.reduce((max,mark) => (mark > max)? max = mark : max = max , 0)
-    return this.students.find(student => student.marks === max)
+    return this.students.reduce((topper,student) => student.marks > topper.marks? student : topper);
   },
 
   statistics(){
-    console.log("Total Students: " + this.students.length)
-    console.log("Passed Student: " + this.passedStudents().length)
-    console.log("Average Marks: " + this.averageMarks())    
-    console.log("Topper: " + this.topper().name)
+    return {
+     Total_Students: this.students.length,
+     Passed_Students: this.passedStudents().length,
+     Average_Marks: this.averageMarks(),
+     Topper: this.topper().name
+    };
   }
 
 };
 
 studentManagementSystem.displayAll()
-studentManagementSystem.findStudentById(3)
+console.log(studentManagementSystem.findStudentById(3))
 console.log(studentManagementSystem.passedStudents())
-studentManagementSystem.studentNames()
+console.log(studentManagementSystem.studentNames())
 console.log(studentManagementSystem.averageMarks())
-studentManagementSystem.addStudent(4,"Amna", 20, 90, "CSE");
+studentManagementSystem.addStudent({name: "Amna", age: 20, marks: 90, department: "CSE"});
 studentManagementSystem.deleteStudent(1)
 studentManagementSystem.updateMarks(4,91)
 console.log(studentManagementSystem.topper());
-studentManagementSystem.statistics()
+console.table(studentManagementSystem.statistics())
