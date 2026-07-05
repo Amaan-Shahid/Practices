@@ -113,6 +113,32 @@ const studentManagementSystem = {
      Average_Marks: this.averageMarks(),
      Topper: this.topper().name
     };
+  },
+
+  searchStudentByName(name){
+    return this.students.filter(student => student.name.toLowerCase().includes(name.toLowerCase()));
+  },
+
+  searchStudentByDepartment(department){
+    return this.students.filter(student => student.department.toLowerCase().includes(department.toLowerCase()));
+  },
+
+  searchStudentByMarksRange(first,second){
+    return this.students.filter(student => student.marks >= first && student.marks <= second);
+  },
+
+  searchStudentByAgeRange(first,second){
+    return this.students.filter(student => student.age >= first && student.age <= second);
+  },
+
+  search(criteria){
+    const required = ["name", "department"];
+    let results = this.students;
+    for(const field of required){
+      if((field in criteria)) {results = results.filter(result => result[field].includes(criteria[field]))}
+    }
+    if(criteria.minMarks !== undefined && criteria.minMarks !== "") results = results.filter(result => result.marks >= criteria.minMarks);
+    return results;
   }
 
 };
