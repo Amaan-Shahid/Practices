@@ -139,6 +139,10 @@ const studentManagementSystem = {
     }
     if(criteria.minMarks !== undefined && criteria.minMarks !== "") results = results.filter(result => result.marks >= criteria.minMarks);
     return results;
+  },
+
+  sortByName(){
+    return this.students.name.sort();
   }
 
 };
@@ -153,3 +157,4 @@ studentManagementSystem.deleteStudent(1)
 studentManagementSystem.updateMarks(4,91)
 console.log(studentManagementSystem.topper());
 console.table(studentManagementSystem.statistics())
+console.log(sortByName())

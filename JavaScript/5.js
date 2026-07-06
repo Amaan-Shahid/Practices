@@ -302,7 +302,7 @@ const {
 } = employee;
 
 const {
-    skills : primarySkill
+    skills : [primarySkill]
 } = employee;
 
 
