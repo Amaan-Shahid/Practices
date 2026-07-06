@@ -142,7 +142,27 @@ const studentManagementSystem = {
   },
 
   sortByName(){
-    return this.students.name.sort();
+    return [...this.students].sort((a,b) => a.name.localeCompare(b.name))   // dont go with this.student.sort because sort will make changes to orignal array.
+  },
+
+  sortByMarks(order){
+    if(order === "asc"){
+      return [...this.students].sort((a,b) => a.marks - b.marks)
+    }
+    else if(order === "desc"){
+      return [...this.students].sort((a,b) => b.marks - a.marks)
+    }
+    else return "Order must be asc or desc!"
+  },
+
+  sortByAge(order){
+    if(order === "asc"){
+      return [...this.students].sort((a,b) => a.age - b.age)
+    }
+    else if(order === "desc"){
+      return [...this.students].sort((a,b) => b.age - a.age)
+    }
+    else return "Order must be asc or desc!"
   }
 
 };
@@ -157,4 +177,4 @@ studentManagementSystem.deleteStudent(1)
 studentManagementSystem.updateMarks(4,91)
 console.log(studentManagementSystem.topper());
 console.table(studentManagementSystem.statistics())
-console.log(sortByName())
+console.log(studentManagementSystem.sortByName())
