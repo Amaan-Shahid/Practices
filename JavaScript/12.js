@@ -86,4 +86,11 @@ B goes to Callback Queue
 
 Print B
 
+
+
+
+.....
+Why doesn't JavaScript execute a timer callback immediately when it becomes ready?
+JavaScript follows the run-to-completion principle. Once synchronous execution begins, it cannot be interrupted. Even if a timer finishes, its callback must wait until the current task completes. This keeps execution predictable, preserves the integrity of the Call Stack, and avoids race conditions caused by interrupting code halfway through execution.
+
 */
