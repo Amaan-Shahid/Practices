@@ -202,3 +202,37 @@ Repeat.
 */
 
 
+//... Interview Question:
+console.log("Start");
+
+Promise.resolve().then(() => {
+    console.log("P1");
+
+    Promise.resolve().then(() => {
+        console.log("P2");
+    });
+});
+
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
+
+console.log("End");
+
+/*
+
+Output:
+
+Start
+End
+P1
+P2
+Timer
+
+Why?
+The Event Loop completely empties the Microtask Queue before taking even a single Macrotask.
+
+*/
+
+
+
