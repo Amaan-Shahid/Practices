@@ -135,6 +135,6 @@ Summary:
 async =>	Makes a function always return a Promise
 await =>	Pauses only the current async function until the Promise settles
 JavaScript Engine =>	Keeps executing other available code
-Resume =>	Happens as a Microtask
+Resume =>	Happens as a Microtask 
 
 */
