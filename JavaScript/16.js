@@ -13,12 +13,42 @@ const createProject = (name) => {
             content,
             createdAt: Date.now()
         }
+    },
+
+    editFile (filePath, newContent) {
+
+        if(!(filePath in this.files)) return "File doesn't exists!"
+
+        if(this.files[filePath].content !== newContent){
+            this.files[filePath].content = newContent;
+        }
+    },
+
+    deleteFile (filePath) {
+        if(!(filePath in this.files)) return "File doesn't exists!";
+        delete this.files[filePath];
     }
     }
 };
 
 const path = require("path");
 const projectName = path.basename(__dirname); 
+
+function deepClone(obj) {
+
+    if (typeof obj !== "object" || obj === null) {
+        return obj;
+    }
+
+    const clone = Array.isArray(obj) ? [] : {};
+
+    for (const key of Object.keys(obj)) {
+        clone[key] = deepClone(obj[key]);
+    }
+
+    return clone;
+}
+
 
 /*
 
