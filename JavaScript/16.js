@@ -51,14 +51,16 @@ const createProject = (name) => {
         return "No commits yet.";
       }
 
-      for (let i = this.commits.length - 1; i >= 0; i--) {
+      let temp = this.head;
+      while(temp !== -1 && temp !== null){
         console.log("\n----------------------");
-        const commit = this.commits[i];
+        const commit = this.commits[temp];
         console.log(`Commit #${commit.id}`);
         console.log(`Message : ${commit.message}`);
         console.log(`Parent : ${commit.parent}`);
         console.log(`Created At :  ${commit.createdAt}`);
-        console.log("----------------------\n");
+        console.log("----------------------\n"); 
+        temp = commit.parent;       
       }
     },
 
@@ -67,6 +69,15 @@ const createProject = (name) => {
         this.files = deepClone(this.commits[id].snapshot);
         this.head = id;    
         this.isModified = false;
+    },
+
+    status(){
+        const workingTreeState = this.isModified ? "Modified" : "Clean";
+        console.log("\n----------------------");
+        console.log(`Repository : ${this.name}`)
+        console.log(`Head : ${this.head}`)
+        console.log(`Working Tree : ${workingTreeState}`)
+        console.log("----------------------\n");
     }
   };
 };
@@ -116,3 +127,4 @@ project.commit("Updated Index.html");
 
 console.log(project);
 project.log();
+project.status();
