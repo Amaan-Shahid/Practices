@@ -1,7 +1,9 @@
 const createProject = (name) => {
     return {
     name,
-    createdAt : Date.now(),   // Current Timestamp in Milli-Seconds
+    createdAt : Date.now(),   // Current Timestamp in Milli-Seconds since Jan 1 1970
+    commits : [],
+    head : -1,
     files : {},
     // ===> We are gonna use objects instead of array of objects because a project with 50000 files would be much more difficult to find in array as in objects we can directly access object properties.
 
@@ -27,12 +29,32 @@ const createProject = (name) => {
     deleteFile (filePath) {
         if(!(filePath in this.files)) return "File doesn't exists!";
         delete this.files[filePath];
+    },
+
+    commit(message){
+        const newId = this.head + 1;
+        const parent = this.head === -1 ? null : this.head;
+        this.commits.push(createCommit(newId, message, this.files, parent))
+        this.head = newId;
     }
     }
 };
 
 const path = require("path");
 const projectName = path.basename(__dirname); 
+
+/*
+
+__dirname → C:\Users\PC\Desktop\Practices\JavaScript  
+path.basename(__dirname) → "JavaScript"
+
+*/
+
+const project = createProject(projectName);
+console.log(project)
+project.addFile("index.html","<h1> Amaan </h1>")
+
+
 
 function deepClone(obj) {
 
@@ -49,21 +71,23 @@ function deepClone(obj) {
     return clone;
 }
 
+function createCommit (id, message, snapshot, parent) {
+        return {
+            id,
+            message,
+            snapshot : deepClone(snapshot),
+            parent,
+            createdAt : Date.now(),
+        }
+}
 
-/*
-
-__dirname → C:\Users\PC\Desktop\Practices\JavaScript  
-path.basename(__dirname) → "JavaScript"
-
-*/
+project.commit("Added Index.html");
 
 
 
-// Outouts for testing
-
-const project = createProject(projectName);
-project.addFile("index.html","<h1> Amaan </h1>")
 console.log(project)
-console.log(project.files)
+
+
+
 
 
